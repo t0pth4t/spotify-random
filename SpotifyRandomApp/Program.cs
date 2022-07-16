@@ -17,10 +17,12 @@ try
     var config = SpotifyClientConfig.CreateDefault();
     var clientId = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID");
     var clientSecret = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_SECRET");
-    var authService = new AuthService(config, clientId, clientSecret);
+    
+    var authService = new AuthService(loggerFactory, config, clientId, clientSecret);
     var accessToken = await authService.GetToken().ConfigureAwait(false);
-    var spotify = new SpotifyClient(config.WithToken(accessToken));
-    var result = await spotify.Search.Item(new SearchRequest(SearchRequest.Types.Track, ""));
+    
+    var searchService = new SearchService(loggerFactory,config);
+    await searchService.RandomSearch(accessToken);
 }
 catch (Exception e)
 {

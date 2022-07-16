@@ -1,15 +1,18 @@
+using Microsoft.Extensions.Logging;
 using SpotifyAPI.Web;
 
 namespace SpotifyRandomApp.services;
 
 public class AuthService
 {
+    private readonly ILogger<AuthService> _logger;
     private readonly SpotifyClientConfig _spotifyClientConfig;
     private readonly string _clientId;
     private readonly string _clientSecret;
 
-    public AuthService(SpotifyClientConfig spotifyClientConfig, string? clientId, string? clientSecret)
+    public AuthService(ILoggerFactory loggerFactory, SpotifyClientConfig spotifyClientConfig, string? clientId, string? clientSecret)
     {
+        _logger = loggerFactory.CreateLogger<AuthService>();
         _spotifyClientConfig = spotifyClientConfig;
         _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
         _clientSecret = clientSecret ?? throw new ArgumentNullException(nameof(clientSecret));
@@ -26,7 +29,7 @@ public class AuthService
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to get access token. {e}");
+            _logger.LogError($"Failed to get access token. {e}");
             throw;
         }
 
