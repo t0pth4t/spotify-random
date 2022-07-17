@@ -22,7 +22,7 @@ try
     var accessToken = await authService.GetToken().ConfigureAwait(false);
     
     var searchService = new SearchService(loggerFactory,config);
-    await searchService.RandomSearch(accessToken);
+    _ = await searchService.RandomSearch(accessToken);
 }
 catch (Exception e)
 {

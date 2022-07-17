@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyRandomApp", "SpotifyRandomApp\SpotifyRandomApp.csproj", "{A09BB466-DDEF-4957-A23A-9E44C66E5B70}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyRandomApp.Tests", "SpotifyRandomApp.Tests\SpotifyRandomApp.Tests.csproj", "{3678553A-0FDC-4B7F-859F-3C9F400F17A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{A09BB466-DDEF-4957-A23A-9E44C66E5B70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A09BB466-DDEF-4957-A23A-9E44C66E5B70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A09BB466-DDEF-4957-A23A-9E44C66E5B70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3678553A-0FDC-4B7F-859F-3C9F400F17A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3678553A-0FDC-4B7F-859F-3C9F400F17A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3678553A-0FDC-4B7F-859F-3C9F400F17A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3678553A-0FDC-4B7F-859F-3C9F400F17A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

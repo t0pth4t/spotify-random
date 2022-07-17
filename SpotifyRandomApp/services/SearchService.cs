@@ -33,5 +33,10 @@ public class SearchService
 
         return trackIds;
     }
+
+    internal string GenerateRandomSearchQuery()
+    {
+        return string.Empty;
+    }
     
 }
