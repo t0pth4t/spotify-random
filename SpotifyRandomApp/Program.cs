@@ -24,7 +24,7 @@ try
     var playlistService = new PlaylistService(loggerFactory);
     var randomPlaylistCreator = new RandomPlaylistCreator(loggerFactory, config, authService, searchService,playlistService);
     
-    await randomPlaylistCreator.CreateRandomPlaylist();
+    await randomPlaylistCreator.CreateRandomPlaylist(null);
 }
 catch (Exception e)
 {
