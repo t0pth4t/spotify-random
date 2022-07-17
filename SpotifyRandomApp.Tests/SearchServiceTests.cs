@@ -11,7 +11,7 @@ public class SearchServiceTests
         // Arrange
         ILoggerFactory doesntDoMuch = new Microsoft.Extensions.Logging.Abstractions.NullLoggerFactory();
 
-        var searchService = new SearchService(doesntDoMuch, null);
+        var searchService = new SearchService(doesntDoMuch);
 
         // Act
         var result = searchService.GenerateRandomSearchQuery();
