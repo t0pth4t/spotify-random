@@ -14,15 +14,17 @@ ILogger logger = loggerFactory.CreateLogger<Program>();
 logger.LogInformation("Example log message");
 try
 {
+
     var config = SpotifyClientConfig.CreateDefault();
     var clientId = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID");
     var clientSecret = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_SECRET");
     
     var authService = new AuthService(loggerFactory, config, clientId, clientSecret);
-    var accessToken = await authService.GetToken().ConfigureAwait(false);
+    var searchService = new SearchService(loggerFactory);
+    var playlistService = new PlaylistService(loggerFactory);
+    var randomPlaylistCreator = new RandomPlaylistCreator(loggerFactory, config, authService, searchService,playlistService);
     
-    var searchService = new SearchService(loggerFactory,config);
-    _ = await searchService.RandomSearch(accessToken);
+    await randomPlaylistCreator.CreateRandomPlaylist();
 }
 catch (Exception e)
 {

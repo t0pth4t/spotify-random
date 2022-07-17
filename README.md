@@ -2,6 +2,8 @@
 
 Taking the concept of generating a truly random playlist and tweaking it to suit my tastes.
 
+Using library <https://johnnycrazy.github.io/SpotifyAPI-NET/> 
+
 ## Secrets
 
 Need to set your own SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET as environment variables before running.

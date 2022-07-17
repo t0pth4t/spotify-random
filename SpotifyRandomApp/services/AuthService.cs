@@ -3,7 +3,12 @@ using SpotifyAPI.Web;
 
 namespace SpotifyRandomApp.services;
 
-public class AuthService
+public interface IAuthService
+{
+    Task<string> GetToken();
+}
+
+public class AuthService : IAuthService
 {
     private readonly ILogger<AuthService> _logger;
     private readonly SpotifyClientConfig _spotifyClientConfig;
