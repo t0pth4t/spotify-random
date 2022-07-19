@@ -5,8 +5,8 @@ namespace SpotifyRandomApp.services;
 
 public interface IPlaylistService
 {
-    Task<FullPlaylist> GetPlaylist(string playlistId);
-    Task ReplaceTracks(string playlistId, IEnumerable<string> randomTrackIds);
+    Task<FullPlaylist?> GetPlaylist(ISpotifyClient spotifyClient, string playlistId);
+    Task ReplaceTracks(ISpotifyClient spotifyClient, string playlistId, IEnumerable<string> randomTrackIds);
 }
 
 public class PlaylistService : IPlaylistService
@@ -17,13 +17,30 @@ public class PlaylistService : IPlaylistService
         _logger = loggerFactory.CreateLogger<PlaylistService>();
     }
 
-    public Task<FullPlaylist> GetPlaylist(string playlistId)
+    public async Task<FullPlaylist?> GetPlaylist(ISpotifyClient spotifyClient, string playlistId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await spotifyClient.Playlists.Get(playlistId).ConfigureAwait(false);    
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting playlist");
+            throw;
+        }
     }
 
-    public Task ReplaceTracks(string playlistId, IEnumerable<string> randomTrackIds)
+    public async Task ReplaceTracks(ISpotifyClient spotifyClient, string playlistId, IEnumerable<string> randomTrackIds)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var replaceItemsRequest = new PlaylistReplaceItemsRequest(randomTrackIds.ToList());
+            await spotifyClient.Playlists.ReplaceItems(playlistId, replaceItemsRequest).ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error replacing tracks");
+            throw;
+        }
     }
 }
