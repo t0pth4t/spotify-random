@@ -6,14 +6,14 @@ namespace SpotifyRandomApp.services;
 
 public interface ISearchService
 {
-    Task<IEnumerable<string>> GetRandomTracks(ISpotifyClient spotifyClient, IEnumerable<string> existingTrackIds);
+    Task<IEnumerable<string>> GetRandomTracks(ISpotifyClient spotifyClient, IEnumerable<string> existingTrackUris);
 }
 
 public class SearchService : ISearchService
 {
     private readonly ILogger<SearchService> _logger;
-    private const int MaxTracks = 25;
-    private const int SearchSleepTime = 60_000;
+    private const int MaxTracks = 5;
+    private const int SearchSleepTime = 10_000;
 
     public SearchService(ILoggerFactory loggerFactory)
     {
@@ -31,7 +31,7 @@ public class SearchService : ISearchService
         return result.Tracks.Items ?? new List<FullTrack>();
     }
 
-    public async Task<IEnumerable<string>> GetRandomTracks(ISpotifyClient spotifyClient, IEnumerable<string> existingTrackIds)
+    public async Task<IEnumerable<string>> GetRandomTracks(ISpotifyClient spotifyClient, IEnumerable<string> existingTrackUris)
     {
         var results = new List<string>();
         do
@@ -41,11 +41,11 @@ public class SearchService : ISearchService
             var randomTracks = await RandomSearch(spotifyClient, randomQuery);
             var randomTrack = randomTracks
                 .OrderByDescending(track => track.Popularity)
-                .FirstOrDefault(track => !existingTrackIds.Contains(track.Id) && !results.Contains(track.Id));
+                .FirstOrDefault(track => !existingTrackUris.Contains(track.Uri) && !results.Contains(track.Uri));
             if(randomTrack is not null)
             {
-                _logger.LogDebug($"Found track {randomTrack.Name} Id {randomTrack.Id}");
-                results.Add(randomTrack.Id);
+                _logger.LogDebug($"Found track {randomTrack.Name} Uri {randomTrack.Uri}");
+                results.Add(randomTrack.Uri);
             }else
             {
                 _logger.LogDebug($"No track found for query {randomQuery}");
@@ -60,7 +60,7 @@ public class SearchService : ISearchService
     {
         var randomYear = GetRandomYear();
         var randomGenre = GetRandomGenre();
-        return $"year:{randomYear}genre:{randomGenre}";
+        return $"year:{randomYear} genre:{randomGenre}";
     }
     
     internal int GetRandomYear(){

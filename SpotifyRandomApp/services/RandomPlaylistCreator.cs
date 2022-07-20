@@ -38,7 +38,7 @@ public class RandomPlaylistCreator
         }
         var tracks = GetTracksFromPlaylist(originalPlaylist);
         //kick off search for random tracks using playlist so no-dupes
-        var randomTracks = await _searchService.GetRandomTracks(spotify, tracks.Select(x => x.Id)).ConfigureAwait(false);
+        var randomTracks = await _searchService.GetRandomTracks(spotify, tracks.Select(x => x.Uri)).ConfigureAwait(false);
         //replace random tracks to playlist
         await _playlistService.ReplaceTracks(spotify, playlistId, randomTracks).ConfigureAwait(false);
     }
