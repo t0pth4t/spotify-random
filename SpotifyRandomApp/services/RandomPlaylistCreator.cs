@@ -27,8 +27,10 @@ public class RandomPlaylistCreator
         {
             throw new ArgumentNullException(nameof(playlistId));
         }
-        var accessToken = await _authService.GetToken().ConfigureAwait(false);
-        ISpotifyClient spotify = new SpotifyClient(_spotifyClientConfig.WithToken(accessToken));
+        // var accessToken = await _authService.GetToken().ConfigureAwait(false);
+        var spotify = await _authService.GetAuthenticatedClient().ConfigureAwait(false);
+        
+        // ISpotifyClient spotify = new SpotifyClient(_spotifyClientConfig.WithToken(accessToken));
         //get original playlist
         var originalPlaylist = await _playlistService.GetPlaylist(spotify,playlistId).ConfigureAwait(false);
         if (originalPlaylist is null)

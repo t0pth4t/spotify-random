@@ -19,12 +19,17 @@ try
     var clientId = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID");
     var clientSecret = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_SECRET");
     var playlistId = Environment.GetEnvironmentVariable("PLAYLIST_ID");
-    
+    var shouldGenerateCredentials = Environment.GetEnvironmentVariable("GENERATE_CREDENTIALS");
     var authService = new AuthService(loggerFactory, config, clientId, clientSecret);
+    if(shouldGenerateCredentials is not null && shouldGenerateCredentials.Equals("TRUE",StringComparison.InvariantCultureIgnoreCase))
+    {
+        await authService.GenerateCredentials().ConfigureAwait(false);
+    }
+
     var searchService = new SearchService(loggerFactory);
     var playlistService = new PlaylistService(loggerFactory);
     var randomPlaylistCreator = new RandomPlaylistCreator(loggerFactory, config, authService, searchService,playlistService);
-    
+
     await randomPlaylistCreator.CreateRandomPlaylist(playlistId);
 }
 catch (Exception e)
