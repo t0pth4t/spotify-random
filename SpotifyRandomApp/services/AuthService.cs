@@ -7,7 +7,6 @@ namespace SpotifyRandomApp.services;
 
 public interface IAuthService
 {
-    Task<string> GetToken();
     Task<ISpotifyClient> GetAuthenticatedClient();
     Task GenerateCredentials();
 }
@@ -19,10 +18,8 @@ public class AuthService : IAuthService
     private readonly string _clientId;
     private readonly string _clientSecret;
 
-    
     private const string CredentialsPath = "credentials.json";
-
-
+    
     public AuthService(ILoggerFactory loggerFactory, SpotifyClientConfig spotifyClientConfig, string? clientId, string? clientSecret)
     {
         _logger = loggerFactory.CreateLogger<AuthService>();

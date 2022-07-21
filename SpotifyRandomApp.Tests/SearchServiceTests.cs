@@ -17,6 +17,6 @@ public class SearchServiceTests
         var result = searchService.GenerateRandomSearchQuery();
 
         // Assert
-        Assert.Empty(result);
+        Assert.NotEmpty(result);
     }
 }

@@ -12,8 +12,8 @@ public interface ISearchService
 public class SearchService : ISearchService
 {
     private readonly ILogger<SearchService> _logger;
-    private const int MaxTracks = 5;
-    private const int SearchSleepTime = 10_000;
+    private const int MaxTracks = 25;
+    private const int TimeToSleepBetweenSearchesMs = 1_000;
 
     public SearchService(ILoggerFactory loggerFactory)
     {
@@ -50,7 +50,7 @@ public class SearchService : ISearchService
             {
                 _logger.LogDebug($"No track found for query {randomQuery}");
             }
-            Thread.Sleep(SearchSleepTime);
+            Thread.Sleep(TimeToSleepBetweenSearchesMs);
         } while (results.Count < MaxTracks);
 
         return results;
@@ -63,13 +63,9 @@ public class SearchService : ISearchService
         return $"year:{randomYear} genre:{randomGenre}";
     }
     
-    internal int GetRandomYear(){
-        return new Random().Next(1920, DateTime.Now.Year);
-    }
+    internal int GetRandomYear() => new Random().Next(1920, DateTime.Now.Year);
 
-    internal string GetRandomGenre()
-    {
-        return SpotifyGenres.Genres[new Random().Next(SpotifyGenres.Genres.Count)];
-    }
+    internal string GetRandomGenre() => SpotifyGenres.Genres[new Random().Next(SpotifyGenres.Genres.Count)];
+    
 
 }
